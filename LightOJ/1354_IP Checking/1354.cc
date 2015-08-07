@@ -1,43 +1,30 @@
-#include <iostream>
-#include <string>
-#include <stdio.h>
-#include <cmath>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-bool check(string str1, string str2);
+bool equal(int a, int b) {
+    int c = 0;
+    for (int i = 0; i < 8; i++){
+        if (b & 1)
+            c |= (1 << i);
+        b /= 10;
+    }
+    return a == c;
+}
 
 int main() {
-
-    int t;
-    cin >> t;
-    int index = 1;
-    while (t--) {
-        string str1;
-        string str2;
-
-        cin >> str1 >> str2;
-
-        cout << "Case " << index++ << ": ";
-        if (check(str1, str2))
-            cout << "Yes" << endl;
+    int T;
+    scanf("%d", &T);
+    for (int cs = 1; cs <= T; ++cs) {
+        int a1, a2, b1, b2, c1, c2, d1, d2;
+        scanf("%d.%d.%d.%d", &a1, &b1, &c1, &d1);
+        scanf("%d.%d.%d.%d", &a2, &b2, &c2, &d2);
+        printf("Case %d: ", cs);
+        if (equal(a1, a2) and equal(b1, b2) and equal(c1, c2) and equal(d1, d2))
+            puts("Yes");
         else
-            cout << "No" << endl;
+            puts("No");
     }
-
     return 0;
 }
 
-bool check(string str1, string str2){
-    int a[4];
-    sscanf(str1.c_str(), "%d.%d.%d.%d", &a[0], &a[1], &a[2], &a[3]);
-    for (int i = 0; i < 4; i++){
-        int tmp = 0;
-        for (int j = 0; j < 8; j++){
-            tmp += (str2[i*9 +j] - '0') * pow(2, 7-j);
-        }
-        if (tmp != a[i])
-            return false;
-    }
-    return true;
-}
